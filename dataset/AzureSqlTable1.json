@@ -1,0 +1,58 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DATE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "China",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "India",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "US",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "EU27&UK",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Russia",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Japan",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Brazil",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "summary_by_countires"
+		}
+	}
+}
