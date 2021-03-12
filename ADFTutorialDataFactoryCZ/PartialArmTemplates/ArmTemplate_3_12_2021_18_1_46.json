@@ -1,0 +1,586 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ADFTutorialDataFactoryCZ"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Aviation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Aviation.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					},
+					{
+						"name": "InternationalAviation",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GroundTransport')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "GroundTransport.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Industry')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Industry.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/InternationalShipping')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "InternationalShipping.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Date",
+						"type": "String"
+					},
+					{
+						"name": "World",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Power')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Power.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Residential')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Residential.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Aviation",
+								"type": "DatasetReference"
+							},
+							"name": "Aviation"
+						},
+						{
+							"dataset": {
+								"referenceName": "GroundTransport",
+								"type": "DatasetReference"
+							},
+							"name": "GroundTransport"
+						},
+						{
+							"dataset": {
+								"referenceName": "Industry",
+								"type": "DatasetReference"
+							},
+							"name": "Industry"
+						},
+						{
+							"dataset": {
+								"referenceName": "Power",
+								"type": "DatasetReference"
+							},
+							"name": "Power"
+						},
+						{
+							"dataset": {
+								"referenceName": "Residential",
+								"type": "DatasetReference"
+							},
+							"name": "Resindential"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Unpivot1"
+						},
+						{
+							"name": "Unpivot2"
+						},
+						{
+							"name": "Unpivot3"
+						},
+						{
+							"name": "Unpivot4"
+						},
+						{
+							"name": "Unpivot5"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "Sort1"
+						},
+						{
+							"name": "Pivot1"
+						},
+						{
+							"name": "Filter1"
+						}
+					],
+					"script": "source(output(\n\t\t{_c0} as date 'MM/dd/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as date 'MM/dd/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as date 'MM/dd/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as date 'MM/dd/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as date 'MM/dd/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Resindential\nAviation unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot1\nGroundTransport unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot2\nIndustry unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot3\nPower unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot4\nResindential unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot5\nUnpivot1, Unpivot2, Unpivot3, Unpivot4, Unpivot5 union(byName: true)~> Union1\nPivot1 sort(asc({_c0}, true)) ~> Sort1\nUnion1 pivot(groupBy({_c0}),\n\tpivotBy(Country, ['China', 'India', 'US', 'EU27&UK', 'Russia', 'Japan', 'Brazil']),\n\t{} = round(sum(Value), 2),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot1\nSort1 filter(not(isNull({_c0}))) ~> Filter1\nFilter1 sink(input(\n\t\tDATE as timestamp,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tDATE = {_c0},\n\t\tChina,\n\t\tIndia,\n\t\tUS,\n\t\t{EU27&UK},\n\t\tRussia,\n\t\tJapan,\n\t\tBrazil\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Aviation')]",
+				"[concat(variables('factoryId'), '/datasets/GroundTransport')]",
+				"[concat(variables('factoryId'), '/datasets/Industry')]",
+				"[concat(variables('factoryId'), '/datasets/Power')]",
+				"[concat(variables('factoryId'), '/datasets/Residential')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "China",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "India",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "US",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EU27&UK",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Russia",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Japan",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Brazil",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "summary_by_countires"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
