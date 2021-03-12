@@ -24,9 +24,11 @@
 		},
 		"schema": [
 			{
+				"name": "Date",
 				"type": "String"
 			},
 			{
+				"name": "World",
 				"type": "String"
 			}
 		]

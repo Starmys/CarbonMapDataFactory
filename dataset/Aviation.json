@@ -24,33 +24,43 @@
 		},
 		"schema": [
 			{
+				"name": "Prop_0",
 				"type": "String"
 			},
 			{
+				"name": "China",
 				"type": "String"
 			},
 			{
+				"name": "India",
 				"type": "String"
 			},
 			{
+				"name": "US",
 				"type": "String"
 			},
 			{
+				"name": "EU27&UK",
 				"type": "String"
 			},
 			{
+				"name": "Russia",
 				"type": "String"
 			},
 			{
+				"name": "Japan",
 				"type": "String"
 			},
 			{
+				"name": "Brazil",
 				"type": "String"
 			},
 			{
+				"name": "ROW",
 				"type": "String"
 			},
 			{
+				"name": "InternationalAviation",
 				"type": "String"
 			}
 		]

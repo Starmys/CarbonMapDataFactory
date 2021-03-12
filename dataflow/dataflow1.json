@@ -31,11 +31,25 @@
 						"type": "DatasetReference"
 					},
 					"name": "InternationalShipping"
+				},
+				{
+					"dataset": {
+						"referenceName": "Power",
+						"type": "DatasetReference"
+					},
+					"name": "Power"
+				},
+				{
+					"dataset": {
+						"referenceName": "Residential",
+						"type": "DatasetReference"
+					},
+					"name": "Resindential"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string,\n\t\tColumn_10 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string,\n\t\tColumn_3 as string,\n\t\tColumn_4 as string,\n\t\tColumn_5 as string,\n\t\tColumn_6 as string,\n\t\tColumn_7 as string,\n\t\tColumn_8 as string,\n\t\tColumn_9 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InternationalShipping"
+			"script": "source(output(\n\t\tProp_0 as string,\n\t\tChina as string,\n\t\tIndia as string,\n\t\tUS as string,\n\t\t{EU27&UK} as string,\n\t\tRussia as string,\n\t\tJapan as string,\n\t\tBrazil as string,\n\t\tROW as string,\n\t\tInternationalAviation as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\tProp_0 as string,\n\t\tChina as string,\n\t\tIndia as string,\n\t\tUS as string,\n\t\t{EU27&UK} as string,\n\t\tRussia as string,\n\t\tJapan as string,\n\t\tBrazil as string,\n\t\tROW as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\tProp_0 as string,\n\t\tChina as string,\n\t\tIndia as string,\n\t\tUS as string,\n\t\t{EU27&UK} as string,\n\t\tRussia as string,\n\t\tJapan as string,\n\t\tBrazil as string,\n\t\tROW as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\tDate as string,\n\t\tWorld as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InternationalShipping\nsource(output(\n\t\tProp_0 as string,\n\t\tChina as string,\n\t\tIndia as string,\n\t\tUS as string,\n\t\t{EU27&UK} as string,\n\t\tRussia as string,\n\t\tJapan as string,\n\t\tBrazil as string,\n\t\tROW as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\tProp_0 as string,\n\t\tChina as string,\n\t\tIndia as string,\n\t\tUS as string,\n\t\t{EU27&UK} as string,\n\t\tRussia as string,\n\t\tJapan as string,\n\t\tBrazil as string,\n\t\tROW as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Resindential"
 		}
 	}
 }
