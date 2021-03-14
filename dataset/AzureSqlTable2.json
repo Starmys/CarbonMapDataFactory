@@ -1,0 +1,58 @@
+{
+	"name": "AzureSqlTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DATE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Power",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Ground Transport",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Industry",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Residential",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Aviation",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "International Shipping",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Globe",
+				"type": "float",
+				"precision": 15
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "summary_by_sector"
+		}
+	}
+}
