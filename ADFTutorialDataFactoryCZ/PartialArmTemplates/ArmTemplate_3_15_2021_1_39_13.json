@@ -1,0 +1,340 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "数据工厂名称",
+			"defaultValue": "ADFTutorialDataFactoryCZ"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SummaryV1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SummaryByCountry",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SummaryByCountry",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "SummaryBySector",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "SummaryBySector",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/SummaryByCountry')]",
+				"[concat(variables('factoryId'), '/dataflows/SummaryBySector')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SummaryByCountry')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Aviation",
+								"type": "DatasetReference"
+							},
+							"name": "Aviation"
+						},
+						{
+							"dataset": {
+								"referenceName": "GroundTransport",
+								"type": "DatasetReference"
+							},
+							"name": "GroundTransport"
+						},
+						{
+							"dataset": {
+								"referenceName": "Industry",
+								"type": "DatasetReference"
+							},
+							"name": "Industry"
+						},
+						{
+							"dataset": {
+								"referenceName": "Power",
+								"type": "DatasetReference"
+							},
+							"name": "Power"
+						},
+						{
+							"dataset": {
+								"referenceName": "Residential",
+								"type": "DatasetReference"
+							},
+							"name": "Resindential"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Unpivot1"
+						},
+						{
+							"name": "Unpivot2"
+						},
+						{
+							"name": "Unpivot3"
+						},
+						{
+							"name": "Unpivot4"
+						},
+						{
+							"name": "Unpivot5"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "Sort1"
+						},
+						{
+							"name": "Pivot1"
+						}
+					],
+					"script": "source(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Resindential\nAviation unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot1\nGroundTransport unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot2\nIndustry unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot3\nPower unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot4\nResindential unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot5\nUnpivot1, Unpivot2, Unpivot3, Unpivot4, Unpivot5 union(byName: true)~> Union1\nPivot1 sort(asc({_c0}, true)) ~> Sort1\nUnion1 pivot(groupBy({_c0}),\n\tpivotBy(Country, ['China', 'India', 'US', 'EU27&UK', 'Russia', 'Japan', 'Brazil']),\n\t{} = round(sum(Value), 2),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot1\nSort1 sink(input(\n\t\tDATE as timestamp,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tDATE = {_c0},\n\t\tIndia,\n\t\tUS,\n\t\t{EU27&UK},\n\t\tRussia,\n\t\tJapan,\n\t\tBrazil\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SummaryBySector')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Aviation",
+								"type": "DatasetReference"
+							},
+							"name": "Aviation"
+						},
+						{
+							"dataset": {
+								"referenceName": "GroundTransport",
+								"type": "DatasetReference"
+							},
+							"name": "GroundTransport"
+						},
+						{
+							"dataset": {
+								"referenceName": "Industry",
+								"type": "DatasetReference"
+							},
+							"name": "Industry"
+						},
+						{
+							"dataset": {
+								"referenceName": "Power",
+								"type": "DatasetReference"
+							},
+							"name": "Power"
+						},
+						{
+							"dataset": {
+								"referenceName": "Residential",
+								"type": "DatasetReference"
+							},
+							"name": "Residential"
+						},
+						{
+							"dataset": {
+								"referenceName": "InternationalShipping",
+								"type": "DatasetReference"
+							},
+							"name": "InternationalShipping"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Sum1"
+						},
+						{
+							"name": "Sum2"
+						},
+						{
+							"name": "Sum3"
+						},
+						{
+							"name": "Sum4"
+						},
+						{
+							"name": "Sum5"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "Select5"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "Join2"
+						},
+						{
+							"name": "Join3"
+						},
+						{
+							"name": "Join4"
+						},
+						{
+							"name": "Join5"
+						},
+						{
+							"name": "Select6"
+						}
+					],
+					"script": "source(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Residential\nsource(output(\n\t\tDate as date 'yyyy-MM-dd',\n\t\tWorld as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InternationalShipping\nAviation derive(Aviation = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW+InternationalAviation, 2)) ~> Sum1\nGroundTransport derive(GroundTransport = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW, 2)) ~> Sum2\nIndustry derive(Industry = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum3\nPower derive(Power = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum4\nResidential derive(Residential = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum5\nSum1 select(mapColumn(\n\t\t{_c0},\n\t\tAviation\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSum2 select(mapColumn(\n\t\t{_c0},\n\t\tGroundTransport\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSum3 select(mapColumn(\n\t\t{_c0},\n\t\tIndustry\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSum4 select(mapColumn(\n\t\t{_c0},\n\t\tPower\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSum5 select(mapColumn(\n\t\t{_c0},\n\t\tResidential\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect1, Select2 join(Select1@{_c0} == Select2@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1, Select3 join(Select1@{_c0} == Select3@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join2\nJoin2, Select4 join(Select1@{_c0} == Select4@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join3\nJoin3, Select5 join(Select1@{_c0} == Select5@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join4\nJoin4, InternationalShipping join(Select1@{_c0} == Date,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join5\nJoin5 select(mapColumn(\n\t\tDate = Select1@{_c0},\n\t\tAviation,\n\t\tGroundTransport,\n\t\tIndustry,\n\t\tPower,\n\t\tResidential,\n\t\tInternationalShipping = World\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nSelect6 sink(input(\n\t\tDATE as timestamp,\n\t\tPower as double,\n\t\t{Ground Transport} as double,\n\t\tIndustry as double,\n\t\tResidential as double,\n\t\tAviation as double,\n\t\t{International Shipping} as double,\n\t\tGlobe as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Power",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Ground Transport",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Industry",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Residential",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Aviation",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "International Shipping",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Globe",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "summary_by_sector"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
