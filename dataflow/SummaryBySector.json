@@ -3,10 +3,84 @@
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
-			"sources": [],
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Aviation",
+						"type": "DatasetReference"
+					},
+					"name": "Aviation"
+				},
+				{
+					"dataset": {
+						"referenceName": "GroundTransport",
+						"type": "DatasetReference"
+					},
+					"name": "GroundTransport"
+				},
+				{
+					"dataset": {
+						"referenceName": "Industry",
+						"type": "DatasetReference"
+					},
+					"name": "Industry"
+				},
+				{
+					"dataset": {
+						"referenceName": "Power",
+						"type": "DatasetReference"
+					},
+					"name": "Power"
+				},
+				{
+					"dataset": {
+						"referenceName": "Residential",
+						"type": "DatasetReference"
+					},
+					"name": "Residential"
+				},
+				{
+					"dataset": {
+						"referenceName": "InternationalShipping",
+						"type": "DatasetReference"
+					},
+					"name": "InternationalShipping"
+				}
+			],
 			"sinks": [],
-			"transformations": [],
-			"script": ""
+			"transformations": [
+				{
+					"name": "Sum1"
+				},
+				{
+					"name": "Sum2"
+				},
+				{
+					"name": "Sum3"
+				},
+				{
+					"name": "Sum4"
+				},
+				{
+					"name": "Sum5"
+				},
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "Select3"
+				},
+				{
+					"name": "Select4"
+				},
+				{
+					"name": "Select5"
+				}
+			],
+			"script": "source(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as string,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as string,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as string,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as string,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Residential\nsource(output(\n\t\tDate as date,\n\t\tWorld as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InternationalShipping\nAviation derive(Aviation = China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW+InternationalAviation) ~> Sum1\nGroundTransport derive(GroundTransport = China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW) ~> Sum2\nIndustry derive(Industry = China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW) ~> Sum3\nPower derive(Power = China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW) ~> Sum4\nResidential derive(Residential = China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW) ~> Sum5\nSum1 select(mapColumn(\n\t\t{_c0},\n\t\tAviation\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSum2 select(mapColumn(\n\t\t{_c0},\n\t\tGroundTransport\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSum3 select(mapColumn(\n\t\t{_c0},\n\t\tIndustry\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSum4 select(mapColumn(\n\t\t{_c0},\n\t\tPower\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSum5 select(mapColumn(\n\t\t{_c0},\n\t\tResidential\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5"
 		}
 	}
 }
