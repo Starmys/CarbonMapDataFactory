@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "SummaryByCountry",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -27,7 +27,7 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "SummaryBySector",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -39,6 +39,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "SummaryBySector",
+						"type": "DataFlowReference"
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
