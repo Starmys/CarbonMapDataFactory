@@ -80,10 +80,15 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"command": "echo \"test\"",
 					"referenceObjects": {
 						"linkedServices": [],
 						"datasets": []
 					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureBatch1",
+					"type": "LinkedServiceReference"
 				}
 			},
 			{
