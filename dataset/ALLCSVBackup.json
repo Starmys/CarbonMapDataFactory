@@ -13,7 +13,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "@utcnow()",
+				"folderPath": {
+					"value": "@string(ticks(utcnow()))",
+					"type": "Expression"
+				},
 				"container": "carbonbackup"
 			},
 			"compressionCodec": "snappy"
