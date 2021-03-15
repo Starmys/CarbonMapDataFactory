@@ -6,200 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "ADFTutorialDataFactoryCZ"
-		},
-		"AzureBatch1_accessKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessKey' of 'AzureBatch1'"
-		},
-		"AzureBlobStorage1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
-		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
-		},
-		"CarbonMapInpusBlobStorage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'CarbonMapInpusBlobStorage'"
-		},
-		"AzureBlobStorage2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
-		},
-		"AzureBatch1_properties_typeProperties_accountName": {
-			"type": "string",
-			"defaultValue": "carbondevtest"
-		},
-		"AzureBatch1_properties_typeProperties_batchUri": {
-			"type": "string",
-			"defaultValue": " https://carbondevtest.eastus.batch.azure.com"
-		},
-		"AzureBatch1_properties_typeProperties_poolName": {
-			"type": "string",
-			"defaultValue": "d1v2"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/SummaryV1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SummaryByCountry",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "SummaryByCountry",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Aviation": {},
-									"GroundTransport": {},
-									"Industry": {},
-									"Power": {},
-									"Resindential": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "SummaryBySector",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "SummaryBySector",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Aviation": {},
-									"GroundTransport": {},
-									"Industry": {},
-									"Power": {},
-									"Residential": {},
-									"InternationalShipping": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/SummaryByCountry')]",
-				"[concat(variables('factoryId'), '/dataflows/SummaryBySector')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Aviation')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Aviation.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					},
-					{
-						"name": "InternationalAviation",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQLSummaryByCountry')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -262,9 +74,7 @@
 					"table": "summary_by_countires"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQLSummaryBySector')]",
@@ -326,389 +136,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "summary_by_sector"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GroundTransport')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "GroundTransport.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Industry')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Industry.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/InternationalShipping')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "InternationalShipping.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Date",
-						"type": "String"
-					},
-					{
-						"name": "World",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Power')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Power.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Residential')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Residential.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBatch1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBatch",
-				"typeProperties": {
-					"accountName": "[parameters('AzureBatch1_properties_typeProperties_accountName')]",
-					"accessKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureBatch1_accessKey')]"
-					},
-					"batchUri": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]",
-					"poolName": "[parameters('AzureBatch1_properties_typeProperties_poolName')]",
-					"linkedServiceName": {
-						"referenceName": "AzureBlobStorage1",
-						"type": "LinkedServiceReference"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CarbonMapInpusBlobStorage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('CarbonMapInpusBlobStorage_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -793,11 +220,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Aviation')]",
-				"[concat(variables('factoryId'), '/datasets/GroundTransport')]",
-				"[concat(variables('factoryId'), '/datasets/Industry')]",
-				"[concat(variables('factoryId'), '/datasets/Power')]",
-				"[concat(variables('factoryId'), '/datasets/Residential')]",
 				"[concat(variables('factoryId'), '/datasets/SQLSummaryByCountry')]"
 			]
 		},
@@ -918,27 +340,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Aviation')]",
-				"[concat(variables('factoryId'), '/datasets/GroundTransport')]",
-				"[concat(variables('factoryId'), '/datasets/Industry')]",
-				"[concat(variables('factoryId'), '/datasets/Power')]",
-				"[concat(variables('factoryId'), '/datasets/Residential')]",
-				"[concat(variables('factoryId'), '/datasets/InternationalShipping')]",
 				"[concat(variables('factoryId'), '/datasets/SQLSummaryBySector')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
-				}
-			},
-			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/IndustryBackup')]",
@@ -970,9 +373,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/InternationalShippingBackup')]",
@@ -1004,9 +405,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PowerBackup')]",
@@ -1038,9 +437,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ResidentialBackup')]",
@@ -1072,9 +469,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ALLCSV')]",
@@ -1145,9 +540,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
@@ -1179,9 +572,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/GroundTransportBackup')]",
@@ -1213,9 +604,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AviationBackup')]",
@@ -1247,9 +636,7 @@
 				},
 				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedData')]",
@@ -1296,9 +683,7 @@
 					"table": "preprocessed_data"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedDataBackup')]",
@@ -1345,9 +730,7 @@
 					"table": "preprocessed_data_backup"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CSVPreprocessedData')]",
@@ -1397,9 +780,7 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyPreprocessBackup')]",
@@ -1455,15 +836,13 @@
 						"inputs": [
 							{
 								"referenceName": "ALLCSV",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "ALLCSVBackup",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1601,15 +980,13 @@
 						"inputs": [
 							{
 								"referenceName": "SQLPreprocessedData",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SQLPreprocessedDataBackup",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1722,15 +1099,13 @@
 						"inputs": [
 							{
 								"referenceName": "CSVPreprocessedData",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SQLPreprocessedData",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -1740,7 +1115,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ALLCSV')]",
 				"[concat(variables('factoryId'), '/datasets/ALLCSVBackup')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBatch1')]",
 				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedData')]",
 				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedDataBackup')]",
 				"[concat(variables('factoryId'), '/datasets/CSVPreprocessedData')]"

@@ -17,6 +17,9 @@
 		"CarbonMapInpusBlobStorage_connectionString": {
 			"value": ""
 		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
 		"AzureBatch1_properties_typeProperties_accountName": {
 			"value": "carbondevtest"
 		},
