@@ -1,0 +1,23 @@
+{
+	"name": "Parquet1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CarbonMapBackup"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "@utcnow()",
+				"container": "carbonbackup"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}

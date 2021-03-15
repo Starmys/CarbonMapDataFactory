@@ -28,17 +28,6 @@
 							"type": "DelimitedTextReadSettings"
 						}
 					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ""
-						}
-					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
@@ -46,140 +35,109 @@
 							{
 								"source": {
 									"name": "Prop_0",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 1
+									"name": "Prop_0",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "China",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 2
+									"name": "China",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "India",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 3
+									"name": "India",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "US",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 4
+									"name": "US",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "EU27&UK",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 5
+									"name": "EU27&UK",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "Russia",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 6
+									"name": "Russia",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "Japan",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 7
+									"name": "Japan",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "Brazil",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 8
+									"name": "Brazil",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "ROW",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 9
+									"name": "ROW",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"name": "InternationalAviation",
-									"type": "String",
-									"physicalType": "String"
+									"type": "String"
 								},
 								"sink": {
-									"type": "String",
-									"physicalType": "String",
-									"ordinal": 10
+									"name": "InternationalAviation",
+									"type": "String"
 								}
 							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
+						]
 					}
 				},
 				"inputs": [
 					{
 						"referenceName": "ALLCSV",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ALLCSVBackup",
 						"type": "DatasetReference"
 					}
 				]
