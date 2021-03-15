@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapBackup"
+			"name": "CarbonMapPreprocess"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
