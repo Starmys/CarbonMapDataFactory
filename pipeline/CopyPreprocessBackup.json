@@ -20,122 +20,44 @@
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
+							"wildcardFolderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+							"wildcardFileName": "*.csv",
 							"enablePartitionDiscovery": false
 						},
 						"formatSettings": {
 							"type": "DelimitedTextReadSettings"
 						}
 					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Prop_0",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Prop_0",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "China",
-									"type": "String"
-								},
-								"sink": {
-									"name": "China",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "India",
-									"type": "String"
-								},
-								"sink": {
-									"name": "India",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "US",
-									"type": "String"
-								},
-								"sink": {
-									"name": "US",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "EU27&UK",
-									"type": "String"
-								},
-								"sink": {
-									"name": "EU27&UK",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Russia",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Russia",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Japan",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Japan",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Brazil",
-									"type": "String"
-								},
-								"sink": {
-									"name": "Brazil",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "ROW",
-									"type": "String"
-								},
-								"sink": {
-									"name": "ROW",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "InternationalAviation",
-									"type": "String"
-								},
-								"sink": {
-									"name": "InternationalAviation",
-									"type": "String"
-								}
-							}
-						]
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
 				"inputs": [
 					{
-						"referenceName": "Aviation",
+						"referenceName": "ALLCSV",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ALLCSVBackup",
 						"type": "DatasetReference"
 					}
 				]
