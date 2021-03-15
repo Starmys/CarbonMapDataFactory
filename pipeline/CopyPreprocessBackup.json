@@ -321,7 +321,7 @@
 				]
 			},
 			{
-				"name": "Backup Residential Data",
+				"name": "Backup CSV Data",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -340,17 +340,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
@@ -362,22 +351,8 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
+					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "Residential",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
 						"referenceName": "ResidentialBackup",
@@ -416,7 +391,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Backup Residential Data",
+						"activity": "Backup CSV Data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
