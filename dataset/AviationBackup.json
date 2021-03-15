@@ -1,0 +1,26 @@
+{
+	"name": "AviationBackup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Aviation.csv",
+				"folderPath": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
+				"container": "carbonbackup"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
