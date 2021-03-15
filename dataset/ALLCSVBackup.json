@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "@string(formatDateTime(utcnow()))",
+					"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
 					"type": "Expression"
 				},
 				"container": "carbonbackup"
