@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+				"folderPath": "CM_CO2_Emissions",
 				"container": "rawdata"
 			},
 			"columnDelimiter": ",",
