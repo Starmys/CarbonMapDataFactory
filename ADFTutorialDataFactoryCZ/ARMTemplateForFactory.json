@@ -1149,39 +1149,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapBackup"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@utcnow()",
-							"type": "Expression"
-						},
-						"container": "carbonbackup"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/GroundTransportBackup')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1439,7 +1406,7 @@
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
 									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"fileExtension": "*.csv"
 								}
 							},
 							"enableStaging": false,
@@ -1744,6 +1711,80 @@
 				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedData')]",
 				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedDataBackup')]",
 				"[concat(variables('factoryId'), '/datasets/CSVPreprocessedData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapBackup"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@utcnow()",
+							"type": "Expression"
+						},
+						"container": "carbonbackup"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "China",
+						"type": "String"
+					},
+					{
+						"name": "India",
+						"type": "String"
+					},
+					{
+						"name": "US",
+						"type": "String"
+					},
+					{
+						"name": "EU27&UK",
+						"type": "String"
+					},
+					{
+						"name": "Russia",
+						"type": "String"
+					},
+					{
+						"name": "Japan",
+						"type": "String"
+					},
+					{
+						"name": "Brazil",
+						"type": "String"
+					},
+					{
+						"name": "ROW",
+						"type": "String"
+					},
+					{
+						"name": "InternationalAviation",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
 			]
 		}
 	]
