@@ -83,6 +83,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": "echo \"test\"",
+					"extendedProperties": {
+						"ct": "ffff"
+					},
 					"referenceObjects": {
 						"linkedServices": [],
 						"datasets": []
