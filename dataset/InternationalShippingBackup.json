@@ -1,0 +1,29 @@
+{
+	"name": "InternationalShippingBackup",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CarbonMapBackup"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "InternationalShipping.csv",
+				"folderPath": {
+					"value": "@utcnow()",
+					"type": "Expression"
+				},
+				"container": "carbonbackup"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
