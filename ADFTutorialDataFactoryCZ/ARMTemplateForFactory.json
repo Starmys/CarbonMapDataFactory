@@ -1093,8 +1093,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "*.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"folderPath": "CM_CO2_Emissions",
 						"container": "rawdata"
 					},
 					"columnDelimiter": ",",
@@ -1166,7 +1165,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "*.csv",
 						"folderPath": {
 							"value": "@utcnow()",
 							"type": "Expression"
@@ -1425,6 +1423,8 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "CM_CO2_Emissions",
+									"wildcardFileName": "*.csv",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {

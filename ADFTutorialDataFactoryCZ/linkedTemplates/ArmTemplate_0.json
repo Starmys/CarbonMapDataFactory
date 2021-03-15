@@ -796,8 +796,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "*.csv",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"folderPath": "CM_CO2_Emissions",
 						"container": "rawdata"
 					},
 					"columnDelimiter": ",",
@@ -869,7 +868,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "*.csv",
 						"folderPath": {
 							"value": "@utcnow()",
 							"type": "Expression"
