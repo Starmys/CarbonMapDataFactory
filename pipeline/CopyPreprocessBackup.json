@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Aviation Data",
+				"name": "Backup Aviation Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -61,9 +61,16 @@
 				]
 			},
 			{
-				"name": "Copy GroundTransport Data",
+				"name": "Backup GroundTransport Data",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Backup Aviation Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -113,15 +120,22 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AviationBackup",
+						"referenceName": "GroundTransportBackup",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy Aviation Data_copy2",
+				"name": "Backup Industry Data",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Backup GroundTransport Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -165,21 +179,28 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Aviation",
+						"referenceName": "Industry",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AviationBackup",
+						"referenceName": "IndustryBackup",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy Aviation Data_copy3",
+				"name": "Backup InternationalShipping Data",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Backup Industry Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -223,21 +244,28 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Aviation",
+						"referenceName": "InternationalShipping",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AviationBackup",
+						"referenceName": "InternationalShippingBackup",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy Aviation Data_copy4",
+				"name": "Backup Aviation Data_copy4",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Backup InternationalShipping Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -281,21 +309,28 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Aviation",
+						"referenceName": "Power",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AviationBackup",
+						"referenceName": "PowerBackup",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "Copy Aviation Data_copy5",
+				"name": "Backup Residential Data",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Backup Aviation Data_copy4",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -339,16 +374,88 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Aviation",
+						"referenceName": "Residential",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "AviationBackup",
+						"referenceName": "ResidentialBackup",
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Preprocess Data",
+				"type": "Custom",
+				"dependsOn": [
+					{
+						"activity": "Backup SQL Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"referenceObjects": {
+						"linkedServices": [],
+						"datasets": []
+					}
+				}
+			},
+			{
+				"name": "Backup SQL Data",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Backup Residential Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Copy Preprocessed Data to SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Preprocess Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
 			}
 		],
 		"annotations": []
