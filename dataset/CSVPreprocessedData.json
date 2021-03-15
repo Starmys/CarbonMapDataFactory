@@ -24,23 +24,23 @@
 		"schema": [
 			{
 				"name": "Date",
-				"type": "datetime"
+				"type": "String"
 			},
 			{
 				"name": "Country",
-				"type": "text"
+				"type": "String"
 			},
 			{
 				"name": "Sector",
-				"type": "text"
+				"type": "String"
 			},
 			{
 				"name": "Value",
-				"type": "float"
+				"type": "String"
 			},
 			{
 				"name": "Rate",
-				"type": "float"
+				"type": "String"
 			}
 		]
 	}
