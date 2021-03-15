@@ -43,7 +43,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable1",
+						"referenceName": "SQLSummaryByCountry",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
