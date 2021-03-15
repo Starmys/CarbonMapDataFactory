@@ -239,8 +239,9 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "Date",
 									"type": "String",
-									"ordinal": 1
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "DATE",
@@ -250,8 +251,9 @@
 							},
 							{
 								"source": {
+									"name": "Country",
 									"type": "String",
-									"ordinal": 2
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Country",
@@ -261,8 +263,9 @@
 							},
 							{
 								"source": {
+									"name": "Sector",
 									"type": "String",
-									"ordinal": 3
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Sector",
@@ -272,8 +275,9 @@
 							},
 							{
 								"source": {
+									"name": "Value",
 									"type": "String",
-									"ordinal": 4
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Value",
@@ -283,8 +287,9 @@
 							},
 							{
 								"source": {
+									"name": "Rate",
 									"type": "String",
-									"ordinal": 5
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Rate",
