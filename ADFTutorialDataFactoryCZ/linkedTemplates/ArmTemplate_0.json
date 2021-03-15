@@ -780,78 +780,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ALLCSV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "CM_CO2_Emissions",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
-					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					},
-					{
-						"name": "InternationalAviation",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/GroundTransportBackup')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -917,6 +845,55 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapPreprocess"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Country",
+						"type": "text"
+					},
+					{
+						"name": "Sector",
+						"type": "text"
+					},
+					{
+						"name": "Value",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Rate",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "preprocessed_data"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		}
 	]

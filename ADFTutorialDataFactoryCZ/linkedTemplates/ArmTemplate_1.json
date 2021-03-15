@@ -13,53 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapPreprocess"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "DATE",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Country",
-						"type": "text"
-					},
-					{
-						"name": "Sector",
-						"type": "text"
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Rate",
-						"type": "float",
-						"precision": 15
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "preprocessed_data"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedDataBackup')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -169,62 +122,46 @@
 					"name": "CarbonMapBackup"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"folderPath": {
-							"value": "@utcnow()",
+							"value": "@string(ticks(utcnow()))",
 							"type": "Expression"
 						},
 						"container": "carbonbackup"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
+					"compressionCodec": "snappy"
 				},
-				"schema": [
-					{
-						"name": "Prop_0",
-						"type": "String"
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ALLCSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CarbonMapInpusBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapInputs"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "*.csv",
+						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+						"container": "rawdata"
 					},
-					{
-						"name": "China",
-						"type": "String"
-					},
-					{
-						"name": "India",
-						"type": "String"
-					},
-					{
-						"name": "US",
-						"type": "String"
-					},
-					{
-						"name": "EU27&UK",
-						"type": "String"
-					},
-					{
-						"name": "Russia",
-						"type": "String"
-					},
-					{
-						"name": "Japan",
-						"type": "String"
-					},
-					{
-						"name": "Brazil",
-						"type": "String"
-					},
-					{
-						"name": "ROW",
-						"type": "String"
-					},
-					{
-						"name": "InternationalAviation",
-						"type": "String"
-					}
-				]
+					"compressionCodec": "snappy"
+				},
+				"schema": []
 			},
 			"dependsOn": []
 		},
@@ -447,27 +384,21 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
+								"type": "ParquetSource",
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFolderPath": "CM_CO2_Emissions",
 									"wildcardFileName": "*.csv",
 									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobStorageWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ""
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -481,9 +412,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "Prop_0",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 1
+											"physicalType": "String"
 										}
 									},
 									{
@@ -493,9 +424,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "China",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 2
+											"physicalType": "String"
 										}
 									},
 									{
@@ -505,9 +436,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "India",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 3
+											"physicalType": "String"
 										}
 									},
 									{
@@ -517,9 +448,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "US",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 4
+											"physicalType": "String"
 										}
 									},
 									{
@@ -529,9 +460,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "EU27&UK",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 5
+											"physicalType": "String"
 										}
 									},
 									{
@@ -541,9 +472,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "Russia",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 6
+											"physicalType": "String"
 										}
 									},
 									{
@@ -553,9 +484,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "Japan",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 7
+											"physicalType": "String"
 										}
 									},
 									{
@@ -565,9 +496,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "Brazil",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 8
+											"physicalType": "String"
 										}
 									},
 									{
@@ -577,9 +508,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "ROW",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 9
+											"physicalType": "String"
 										}
 									},
 									{
@@ -589,9 +520,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
+											"name": "InternationalAviation",
 											"type": "String",
-											"physicalType": "String",
-											"ordinal": 10
+											"physicalType": "String"
 										}
 									}
 								],
@@ -888,8 +819,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ALLCSV')]",
 				"[concat(variables('factoryId'), '/datasets/ALLCSVBackup')]",
-				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedData')]",
 				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedDataBackup')]",
 				"[concat(variables('factoryId'), '/datasets/CSVPreprocessedData')]"
 			]
