@@ -35,9 +35,9 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "code_3",
 									"type": "String",
-									"physicalType": "String",
-									"ordinal": 1
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "CountryCode",
@@ -47,8 +47,9 @@
 							},
 							{
 								"source": {
+									"name": "continent",
 									"type": "String",
-									"ordinal": 2
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Continent",
@@ -58,8 +59,9 @@
 							},
 							{
 								"source": {
+									"name": "sub_region",
 									"type": "String",
-									"ordinal": 3
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SubRegion",
