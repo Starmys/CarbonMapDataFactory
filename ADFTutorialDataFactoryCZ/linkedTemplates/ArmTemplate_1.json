@@ -26,35 +26,13 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "DATE",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Country",
-						"type": "text"
-					},
-					{
-						"name": "Sector",
-						"type": "text"
-					},
-					{
-						"name": "Value",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Rate",
-						"type": "float",
-						"precision": 15
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "preprocessed_data_backup"
+					"table": {
+						"value": "prepreocessed_data_@formatDateTime(utcnow(), 'yyyy-MM-dd')",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": []
