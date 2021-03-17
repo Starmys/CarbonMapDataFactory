@@ -1,5 +1,5 @@
 {
-	"name": "Baseline",
+	"name": "CSVBaseline",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage2",

@@ -1,0 +1,32 @@
+{
+	"name": "SQLCountryContinent",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CarbonMapStatic"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CountryCode",
+				"type": "varchar"
+			},
+			{
+				"name": "Continent",
+				"type": "varchar"
+			},
+			{
+				"name": "SubRegion",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "country_continent"
+		}
+	}
+}

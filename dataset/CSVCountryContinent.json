@@ -1,5 +1,5 @@
 {
-	"name": "CountryContinent",
+	"name": "CSVCountryContinent",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage2",
