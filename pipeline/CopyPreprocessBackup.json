@@ -82,7 +82,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"command": "echo \"Not Implemented.\"",
+					"command": "/bin/bash -c \"echo \\\"Not Implemented.\\\"\"",
 					"extendedProperties": {
 						"ct": "ffff"
 					},
