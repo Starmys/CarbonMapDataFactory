@@ -30,7 +30,7 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": {
-						"value": "prepreocessed_data_@formatDateTime(utcnow(), 'yyyy-MM-dd')",
+						"value": "@concat('preprocessed_data_backup_', formatDateTime(utcnow(), 'yyyy_MM_dd_hh_mm_ss'))",
 						"type": "Expression"
 					}
 				}
@@ -638,7 +638,9 @@
 								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "AzureSqlSink",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
@@ -759,7 +761,9 @@
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from preprocessed_data",
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
@@ -889,7 +893,9 @@
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from country_continent",
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
