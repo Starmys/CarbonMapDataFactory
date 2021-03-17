@@ -617,7 +617,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"command": "/bin/bash -c \"echo \\\"Not Implemented.\\\"\"",
+							"command": {
+								"value": "/bin/bash -c \"azcopy copy 'https://carbontestcz.blob.core.windows.net/carbondatastaticv1?sv=2020-04-08&st=2021-03-17T06%3A21%3A49Z&se=2021-03-18T06%3A21%3A49Z&sr=c&sp=racwdxlt&sig=XkyCX1GCfUZW%2FhADYAmxTbeyWXP%2FVmezjuCYNj1BZhI%3D' './' --recursive && azcopy copy 'https://carbonmapinput.blob.core.windows.net/rawdata/CM_CO2_Emissions/CM_2020_Sectoral?sv=2020-04-08&st=2021-03-17T06%3A28%3A18Z&se=2021-03-18T06%3A28%3A18Z&sr=c&sp=rl&sig=1uMkuv0BETLSC201Y%2FmVUFgk5rPYqXwhi27FVRehIcM%3D' './' --recursive && mv carbondatastaticv1 Raw && mv CM_2020_Sectoral/* Raw\nrm -r CM_2020_Sectoral && mv Raw/process_data_v1.py ./ && python3 process_data_v1.py && azcopy copy 'Output/PreprocessedData.csv' 'https://carbontestcz.blob.core.windows.net/carbondatacsvv1?sv=2020-04-08&st=2021-03-17T06%3A35%3A15Z&se=2021-03-18T06%3A35%3A15Z&sr=c&sp=rawl&sig=OkPqzL%2Bjm%2B97wKlC0XiVFpzYRgX6YPdo2fC0aMfGL18%3D'\"",
+								"type": "Expression"
+							},
 							"extendedProperties": {
 								"ct": "ffff"
 							},
