@@ -1314,147 +1314,32 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "ParquetSource",
+								"type": "DelimitedTextSource",
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
+									"wildcardFileName": "*.csv",
 									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobStorageWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Prop_0",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Prop_0",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "China",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "China",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "India",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "India",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "US",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "US",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "EU27&UK",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "EU27&UK",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Russia",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Russia",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Japan",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Japan",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Brazil",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Brazil",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "ROW",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ROW",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "InternationalAviation",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "InternationalAviation",
-											"type": "String",
-											"physicalType": "String"
-										}
-									}
-								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -1497,7 +1382,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"command": "echo \"test\"",
+							"command": "echo \"Not Implemented.\"",
+							"extendedProperties": {
+								"ct": "ffff"
+							},
 							"referenceObjects": {
 								"linkedServices": [],
 								"datasets": []
@@ -1665,10 +1553,10 @@
 										"source": {
 											"name": "Date",
 											"type": "String",
-											"physicalType": "datetime"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "DATE",
+											"name": "Date",
 											"type": "DateTime",
 											"physicalType": "datetime"
 										}
@@ -1677,31 +1565,31 @@
 										"source": {
 											"name": "Country",
 											"type": "String",
-											"physicalType": "text"
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "Country",
 											"type": "String",
-											"physicalType": "text"
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "Sector",
 											"type": "String",
-											"physicalType": "text"
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "Sector",
 											"type": "String",
-											"physicalType": "text"
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
 											"name": "Value",
 											"type": "String",
-											"physicalType": "float"
+											"physicalType": "String"
 										},
 										"sink": {
 											"name": "Value",
@@ -1713,10 +1601,10 @@
 										"source": {
 											"name": "Rate",
 											"type": "String",
-											"physicalType": "float"
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Rate",
+											"name": "Percentage",
 											"type": "Double",
 											"physicalType": "float"
 										}
@@ -1757,37 +1645,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapBackup"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@string(ticks(utcnow()))",
-							"type": "Expression"
-						},
-						"container": "carbonbackup"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ALLCSV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1800,20 +1657,62 @@
 					"name": "CarbonMapInputs"
 				},
 				"annotations": [],
-				"type": "Parquet",
+				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "*.csv",
 						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
 						"container": "rawdata"
 					},
-					"compressionCodec": "snappy"
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/CarbonMapInpusBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage2",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapBackup"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": {
+							"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
+							"type": "Expression"
+						},
+						"container": "carbonbackup"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage2')]"
 			]
 		}
 	]
