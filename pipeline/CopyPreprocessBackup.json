@@ -130,12 +130,12 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "DATE",
+									"name": "Date",
 									"type": "DateTime",
 									"physicalType": "datetime"
 								},
 								"sink": {
-									"name": "DATE",
+									"name": "Date",
 									"type": "DateTime",
 									"physicalType": "datetime"
 								}
@@ -144,24 +144,24 @@
 								"source": {
 									"name": "Country",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								},
 								"sink": {
 									"name": "Country",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
 									"name": "Sector",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								},
 								"sink": {
 									"name": "Sector",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -178,12 +178,12 @@
 							},
 							{
 								"source": {
-									"name": "Rate",
+									"name": "Percentage",
 									"type": "Double",
 									"physicalType": "float"
 								},
 								"sink": {
-									"name": "Rate",
+									"name": "Percentage",
 									"type": "Double",
 									"physicalType": "float"
 								}
