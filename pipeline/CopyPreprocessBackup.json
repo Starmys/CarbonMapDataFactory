@@ -251,10 +251,10 @@
 								"source": {
 									"name": "Date",
 									"type": "String",
-									"physicalType": "datetime"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "DATE",
+									"name": "Date",
 									"type": "DateTime",
 									"physicalType": "datetime"
 								}
@@ -263,31 +263,31 @@
 								"source": {
 									"name": "Country",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Country",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
 									"name": "Sector",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Sector",
 									"type": "String",
-									"physicalType": "text"
+									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
 									"name": "Value",
 									"type": "String",
-									"physicalType": "float"
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Value",
@@ -299,10 +299,10 @@
 								"source": {
 									"name": "Rate",
 									"type": "String",
-									"physicalType": "float"
+									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Rate",
+									"name": "Percentage",
 									"type": "Double",
 									"physicalType": "float"
 								}
