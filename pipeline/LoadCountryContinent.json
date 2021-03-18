@@ -37,7 +37,7 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "code_3",
+									"name": "CountryCode",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -49,24 +49,36 @@
 							},
 							{
 								"source": {
-									"name": "continent",
+									"name": "CountryName",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Continent",
+									"name": "CountryName",
 									"type": "String",
 									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
-									"name": "sub_region",
+									"name": "SubRegion",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
 									"name": "SubRegion",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Continent",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Continent",
 									"type": "String",
 									"physicalType": "varchar"
 								}
