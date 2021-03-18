@@ -37,6 +37,10 @@
 			{
 				"name": "Continent",
 				"type": "String"
+			},
+			{
+				"name": "DataSource",
+				"type": "String"
 			}
 		]
 	}

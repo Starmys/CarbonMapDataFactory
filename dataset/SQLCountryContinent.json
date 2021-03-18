@@ -26,6 +26,10 @@
 			{
 				"name": "Continent",
 				"type": "varchar"
+			},
+			{
+				"name": "DataSource",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
