@@ -16,11 +16,15 @@
 				"type": "varchar"
 			},
 			{
-				"name": "Continent",
+				"name": "CountryName",
 				"type": "varchar"
 			},
 			{
 				"name": "SubRegion",
+				"type": "varchar"
+			},
+			{
+				"name": "Continent",
 				"type": "varchar"
 			}
 		],
