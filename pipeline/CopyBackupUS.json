@@ -49,13 +49,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CarbonDataUS",
+						"referenceName": "CarbonDataUSRaw",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "CarbonDataUSBackup",
+						"referenceName": "CarbonDataUSRawBackup",
 						"type": "DatasetReference"
 					}
 				]
@@ -210,7 +210,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CarbonDataUS",
+						"referenceName": "CarbonDataUSRaw",
 						"type": "DatasetReference"
 					}
 				],
