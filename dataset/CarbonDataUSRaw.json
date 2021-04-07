@@ -1,5 +1,5 @@
 {
-	"name": "CarbonDataUS",
+	"name": "CarbonDataUSRaw",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
