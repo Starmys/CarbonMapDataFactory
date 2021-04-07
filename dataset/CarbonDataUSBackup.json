@@ -1,12 +1,12 @@
 {
-	"name": "CarbonDataUS",
+	"name": "CarbonDataUSBackup",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapInputs"
+			"name": "CarbonMapBackup"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -14,7 +14,11 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CarbonDataUS.csv",
-				"container": "carbondataus"
+				"folderPath": {
+					"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
+					"type": "Expression"
+				},
+				"container": "carbonbackup"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
