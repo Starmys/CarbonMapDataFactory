@@ -217,14 +217,7 @@
 			{
 				"name": "Copy Preprocessed Data to SQL",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Preprocess Data",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,

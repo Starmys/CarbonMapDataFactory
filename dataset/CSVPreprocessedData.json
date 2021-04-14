@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "PreprocessedData.csv",
-				"container": "carbondatacsvv1"
+				"fileName": "CarbonDataWithUS.csv",
+				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

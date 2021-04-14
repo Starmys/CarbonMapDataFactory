@@ -154,7 +154,7 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "date",
+									"name": "Date",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -166,7 +166,7 @@
 							},
 							{
 								"source": {
-									"name": "state",
+									"name": "State",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -178,7 +178,7 @@
 							},
 							{
 								"source": {
-									"name": "sector",
+									"name": "Sector",
 									"type": "String",
 									"physicalType": "String"
 								},
@@ -190,12 +190,24 @@
 							},
 							{
 								"source": {
-									"name": "value",
+									"name": "Value",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
 									"name": "Value",
+									"type": "Double",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "RateOfChange",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RateOfChange",
 									"type": "Double",
 									"physicalType": "float"
 								}
@@ -210,7 +222,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CarbonDataUSRaw",
+						"referenceName": "CSVCarbonDataUS",
 						"type": "DatasetReference"
 					}
 				],
