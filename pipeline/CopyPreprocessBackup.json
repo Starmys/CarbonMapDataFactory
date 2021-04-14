@@ -240,7 +240,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from preprocessed_data",
+						"preCopyScript": "delete from carbon_data",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -285,6 +285,18 @@
 							},
 							{
 								"source": {
+									"name": "State",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "State",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
 									"name": "Value",
 									"type": "String",
 									"physicalType": "String"
@@ -297,12 +309,12 @@
 							},
 							{
 								"source": {
-									"name": "Rate",
+									"name": "RateOfChange",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Percentage",
+									"name": "RateOfChange",
 									"type": "Double",
 									"physicalType": "float"
 								}
