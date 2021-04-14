@@ -38,7 +38,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "preprocessed_data"
+			"table": "carbon_data"
 		}
 	}
 }
