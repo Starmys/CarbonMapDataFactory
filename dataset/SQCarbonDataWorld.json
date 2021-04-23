@@ -1,12 +1,12 @@
 {
-	"name": "SQLPreprocessedData",
+	"name": "SQCarbonDataWorld",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapPreprocess"
+			"name": "CarbonMapSQL"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
@@ -38,7 +38,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "carbon_data"
+			"table": "carbon_data_world"
 		}
 	}
 }

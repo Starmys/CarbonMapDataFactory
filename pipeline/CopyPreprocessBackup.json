@@ -203,7 +203,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLPreprocessedData",
+						"referenceName": "SQCarbonDataWorld",
 						"type": "DatasetReference"
 					}
 				],
@@ -342,7 +342,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLPreprocessedData",
+						"referenceName": "SQCarbonDataWorld",
 						"type": "DatasetReference"
 					}
 				]

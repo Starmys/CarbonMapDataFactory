@@ -6,14 +6,17 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapPreprocess"
+			"name": "CarbonMapSQL"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "@concat('carbon_data_us_backup_', formatDateTime(utcnow(), 'yyyy_MM_dd_hh_mm_ss'))"
+			"table": {
+				"value": "@concat('carbon_data_us_backup_', formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+				"type": "Expression"
+			}
 		}
 	}
 }
