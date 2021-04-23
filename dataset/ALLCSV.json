@@ -2,7 +2,7 @@
 	"name": "ALLCSV",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "CarbonMapInpusBlobStorage",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -13,8 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-				"container": "rawdata"
+				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
