@@ -2,7 +2,7 @@
 	"name": "CSVCountryContinent",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage2",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -14,7 +14,8 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CountryContinent.csv",
-				"container": "carbondatastaticv1"
+				"folderPath": "static",
+				"container": "carbonpreprocesssrc"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
