@@ -1,5 +1,5 @@
 {
-	"name": "CSVPreprocessedData",
+	"name": "CSVCarbonDataWorld",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "CarbonDataWithUS.csv",
+				"fileName": "CarbonDataWorld.csv",
 				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
