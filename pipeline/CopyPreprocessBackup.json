@@ -738,6 +738,11 @@
 								}
 							},
 							{
+								"source": {
+									"name": "State",
+									"type": "String",
+									"physicalType": "String"
+								},
 								"sink": {
 									"name": "State",
 									"type": "String",
