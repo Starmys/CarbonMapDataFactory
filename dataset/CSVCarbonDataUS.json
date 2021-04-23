@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapPreprocess"
+			"name": "CarbonMapInputs"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
