@@ -1,5 +1,5 @@
 {
-	"name": "SQLPreprocessedDataBackup",
+	"name": "SQLCarbonDataWorldBackup",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
