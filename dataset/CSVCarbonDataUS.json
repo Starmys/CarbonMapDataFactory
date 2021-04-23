@@ -14,7 +14,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "CarbonDataUS.csv",
-				"container": "carbondatacsvv1"
+				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -23,11 +23,15 @@
 		},
 		"schema": [
 			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
 				"name": "Date",
 				"type": "String"
 			},
 			{
-				"name": "State",
+				"name": "RateOfChange",
 				"type": "String"
 			},
 			{
@@ -36,10 +40,6 @@
 			},
 			{
 				"name": "Value",
-				"type": "String"
-			},
-			{
-				"name": "RateOfChange",
 				"type": "String"
 			}
 		]
