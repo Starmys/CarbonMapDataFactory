@@ -23,10 +23,6 @@
 		},
 		"schema": [
 			{
-				"name": "Country",
-				"type": "String"
-			},
-			{
 				"name": "Date",
 				"type": "String"
 			},
@@ -36,6 +32,10 @@
 			},
 			{
 				"name": "Sector",
+				"type": "String"
+			},
+			{
+				"name": "State",
 				"type": "String"
 			},
 			{
