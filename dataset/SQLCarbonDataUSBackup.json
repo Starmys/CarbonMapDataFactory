@@ -14,7 +14,7 @@
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
-				"value": "@concat('backup_carbon_data_us_', formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+				"value": "@concat('backup_carbon_data_us_', formatDateTime(utcnow(), 'yyyy_MM_dd_hh_mm'))",
 				"type": "Expression"
 			}
 		}
