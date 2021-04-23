@@ -23,11 +23,15 @@
 		},
 		"schema": [
 			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
 				"name": "Date",
 				"type": "String"
 			},
 			{
-				"name": "Country",
+				"name": "RateOfChange",
 				"type": "String"
 			},
 			{
@@ -36,10 +40,6 @@
 			},
 			{
 				"name": "Value",
-				"type": "String"
-			},
-			{
-				"name": "Rate",
 				"type": "String"
 			}
 		]
