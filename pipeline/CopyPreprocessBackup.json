@@ -141,7 +141,7 @@
 								"sink": {
 									"name": "Date",
 									"type": "DateTime",
-									"physicalType": "datetime"
+									"physicalType": "DateTime"
 								}
 							},
 							{
@@ -153,7 +153,7 @@
 								"sink": {
 									"name": "Country",
 									"type": "String",
-									"physicalType": "varchar"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -165,7 +165,7 @@
 								"sink": {
 									"name": "Sector",
 									"type": "String",
-									"physicalType": "varchar"
+									"physicalType": "String"
 								}
 							},
 							{
@@ -177,19 +177,19 @@
 								"sink": {
 									"name": "Value",
 									"type": "Double",
-									"physicalType": "float"
+									"physicalType": "Double"
 								}
 							},
 							{
 								"source": {
-									"name": "Percentage",
+									"name": "RateOfChange",
 									"type": "Double",
 									"physicalType": "float"
 								},
 								"sink": {
-									"name": "Percentage",
+									"name": "RateOfChange",
 									"type": "Double",
-									"physicalType": "float"
+									"physicalType": "Double"
 								}
 							}
 						],
