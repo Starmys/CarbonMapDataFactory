@@ -2,7 +2,7 @@
 	"name": "ALLCSVBackup",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage2",
+			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -17,7 +17,7 @@
 					"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
 					"type": "Expression"
 				},
-				"container": "carbonbackup"
+				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
