@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyCountryContinentFromCSVToSQL",
+				"name": "CopyHistoricalDataFromCSVToSQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from country_continent",
+						"preCopyScript": "delete from historical_data",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -37,62 +37,62 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "CountryCode",
+									"name": "Year",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "CountryCode",
+									"name": "Year",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Country",
 									"type": "String",
 									"physicalType": "varchar"
 								}
 							},
 							{
 								"source": {
-									"name": "CountryName",
+									"name": "CO2",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "CountryName",
-									"type": "String",
-									"physicalType": "varchar"
+									"name": "CO2",
+									"type": "Double",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "SubRegion",
+									"name": "Population",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "SubRegion",
-									"type": "String",
-									"physicalType": "varchar"
+									"name": "Population",
+									"type": "Double",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "Continent",
+									"name": "GDP",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Continent",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"source": {
-									"name": "DataSource",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "DataSource",
-									"type": "String",
-									"physicalType": "varchar"
+									"name": "GDP",
+									"type": "Double",
+									"physicalType": "float"
 								}
 							}
 						],
@@ -105,13 +105,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CSVCountryContinent",
+						"referenceName": "CSVHistoricalData",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLCountryContinent",
+						"referenceName": "SQLHistoricalData",
 						"type": "DatasetReference"
 					}
 				]
