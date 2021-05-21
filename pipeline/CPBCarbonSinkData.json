@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy to SQL Covid Data",
+				"name": "Copy to SQL Ocean Carbon Sink Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from covid_data",
+						"preCopyScript": "delete from ocean_carbon_sink_data",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -111,7 +111,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLCovidData",
+						"referenceName": "SQLOceanCarbonSinkData",
 						"type": "DatasetReference"
 					}
 				]
