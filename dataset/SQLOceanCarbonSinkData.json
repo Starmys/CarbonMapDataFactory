@@ -1,44 +1,41 @@
 {
-	"name": "SQLCarbonDataWorld",
+	"name": "SQLOceanCarbonSinkData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "CarbonMapSQL"
+			"name": "CarbonSinkSQL"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "DATE",
+				"name": "Date",
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
 			},
 			{
-				"name": "Country",
-				"type": "text"
-			},
-			{
-				"name": "Sector",
-				"type": "text"
-			},
-			{
-				"name": "Value",
+				"name": "Longitude",
 				"type": "float",
 				"precision": 15
 			},
 			{
-				"name": "Rate",
+				"name": "Latitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Value",
 				"type": "float",
 				"precision": 15
 			}
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "carbon_data_world"
+			"table": "ocean_carbon_sink_data"
 		}
 	}
 }
