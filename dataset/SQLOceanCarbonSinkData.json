@@ -13,9 +13,8 @@
 		"schema": [
 			{
 				"name": "Date",
-				"type": "datetime",
-				"precision": 23,
-				"scale": 3
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "Longitude",
