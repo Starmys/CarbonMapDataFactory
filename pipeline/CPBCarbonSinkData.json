@@ -49,48 +49,36 @@
 							},
 							{
 								"source": {
-									"name": "Country",
+									"name": "Longitude",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Country",
-									"type": "String",
-									"physicalType": "varchar"
+									"name": "Longitude",
+									"type": "Double",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "Confirmed",
+									"name": "Latitude",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Confirmed",
-									"type": "Int64",
-									"physicalType": "bigint"
+									"name": "Latitude",
+									"type": "Double",
+									"physicalType": "float"
 								}
 							},
 							{
 								"source": {
-									"name": "Deaths",
+									"name": "Value",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Deaths",
-									"type": "Int64",
-									"physicalType": "bigint"
-								}
-							},
-							{
-								"source": {
-									"name": "Stringency",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Stringency",
+									"name": "Value",
 									"type": "Double",
 									"physicalType": "float"
 								}
@@ -105,7 +93,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CSVCovidData",
+						"referenceName": "CSVOceanCarbonSinkData",
 						"type": "DatasetReference"
 					}
 				],

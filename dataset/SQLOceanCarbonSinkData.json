@@ -17,6 +17,10 @@
 				"precision": 10
 			},
 			{
+				"name": "Sector",
+				"type": "varchar"
+			},
+			{
 				"name": "Longitude",
 				"type": "float",
 				"precision": 15

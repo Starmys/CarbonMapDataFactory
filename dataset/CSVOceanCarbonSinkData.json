@@ -37,6 +37,10 @@
 			{
 				"name": "Date",
 				"type": "String"
+			},
+			{
+				"name": "Sector",
+				"type": "String"
 			}
 		]
 	}
