@@ -66,7 +66,25 @@
 				"type": "Custom",
 				"dependsOn": [
 					{
+						"activity": "Backup CSV Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
 						"activity": "Backup SQL Covid Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Backup SQL Carbon Data US",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Backup SQL Carbon Data World",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -101,14 +119,7 @@
 			{
 				"name": "Backup SQL Carbon Data World",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Backup CSV Data",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -337,14 +348,7 @@
 			{
 				"name": "Backup SQL Carbon Data US",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Backup SQL Carbon Data World",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -452,14 +456,7 @@
 			{
 				"name": "Backup SQL Covid Data",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Backup SQL Carbon Data US",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -569,7 +566,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy to SQL Carbon Data US",
+						"activity": "Preprocess Data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -690,7 +687,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy to SQL Carbon Data World",
+						"activity": "Preprocess Data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
