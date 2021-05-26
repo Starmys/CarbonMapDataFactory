@@ -1,5 +1,5 @@
 {
-	"name": "SQLOceanCarbonSinkData",
+	"name": "SQLCarbonSinkData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -38,7 +38,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "ocean_carbon_sink_data"
+			"table": "carbon_sink_data"
 		}
 	}
 }

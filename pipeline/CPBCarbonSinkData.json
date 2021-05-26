@@ -28,7 +28,6 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from ocean_carbon_sink_data",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -111,7 +110,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLOceanCarbonSinkData",
+						"referenceName": "SQLCarbonSinkData",
 						"type": "DatasetReference"
 					}
 				]
