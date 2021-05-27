@@ -13,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "*CarbonSinkData*.csv",
 				"container": "carbonsatellitedatascv"
 			},
 			"columnDelimiter": ",",
