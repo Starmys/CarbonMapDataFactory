@@ -1,5 +1,5 @@
 {
-	"name": "CSVOceanCarbonSinkData",
+	"name": "CSVCarbonSinkData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "OceanCarbonSinkData.csv",
+				"fileName": "*",
 				"container": "carbonsatellitedatascv"
 			},
 			"columnDelimiter": ",",
