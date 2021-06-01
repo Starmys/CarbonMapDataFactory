@@ -1,5 +1,5 @@
 {
-	"name": "SQLCountryContinent",
+	"name": "SQLCountryRegion",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSqlDatabase1",
@@ -34,7 +34,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "country_continent"
+			"table": "country_region"
 		}
 	}
 }

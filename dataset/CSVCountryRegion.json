@@ -1,5 +1,5 @@
 {
-	"name": "CSVCountryContinent",
+	"name": "CSVCountryRegion",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "CountryContinent.csv",
+				"fileName": "CountryRegion.csv",
 				"folderPath": "static",
 				"container": "carbonpreprocesssrc"
 			},
@@ -24,11 +24,11 @@
 		},
 		"schema": [
 			{
-				"name": "CountryCode",
+				"name": "Code",
 				"type": "String"
 			},
 			{
-				"name": "CountryName",
+				"name": "Name",
 				"type": "String"
 			},
 			{
@@ -41,6 +41,14 @@
 			},
 			{
 				"name": "DataSource",
+				"type": "String"
+			},
+			{
+				"name": "Longitude",
+				"type": "String"
+			},
+			{
+				"name": "Latitude",
 				"type": "String"
 			}
 		]
