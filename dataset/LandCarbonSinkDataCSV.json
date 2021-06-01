@@ -1,5 +1,5 @@
 {
-	"name": "CSVCarbonSinkData",
+	"name": "LandCarbonSinkDataCSV",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
@@ -13,7 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "carbonsatellitedatascv"
+				"fileName": "LandCarbonSinkAggregateData.csv",
+				"container": "carbondatacsv"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
@@ -22,11 +23,15 @@
 		},
 		"schema": [
 			{
-				"name": "Longitude",
+				"name": "Date",
 				"type": "String"
 			},
 			{
-				"name": "Latitude",
+				"name": "CountryRegion",
+				"type": "String"
+			},
+			{
+				"name": "Sector",
 				"type": "String"
 			},
 			{
@@ -34,11 +39,7 @@
 				"type": "String"
 			},
 			{
-				"name": "Date",
-				"type": "String"
-			},
-			{
-				"name": "Sector",
+				"name": "RateOfChange",
 				"type": "String"
 			}
 		]

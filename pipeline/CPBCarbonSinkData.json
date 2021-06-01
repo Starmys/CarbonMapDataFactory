@@ -106,7 +106,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CSVOceanCarbonSinkData",
+						"referenceName": "CSVCarbonSinkData",
 						"type": "DatasetReference"
 					}
 				],
