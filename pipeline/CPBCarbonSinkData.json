@@ -29,7 +29,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"tableOption": "autoCreate",
+						"preCopyScript": "DELETE FROM carbon_sink_data;\nCREATE TABLE carbon_sink_data\n(\n\t[Date] int NOT NULL,\n\t[Sector] int NOT NULL,\n\t[Longitude] float NOT NULL,\n\t[Latitude] float NOT NULL,\n\t[Value] float NOT NULL\n);\n",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
