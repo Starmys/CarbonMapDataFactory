@@ -28,6 +28,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "delete from land_carbon_sink_data;",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -141,6 +142,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "delete from ocean_carbon_sink_data;",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
