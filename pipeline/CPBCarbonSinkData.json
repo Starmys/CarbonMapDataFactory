@@ -29,7 +29,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "drop table carbon_sink_data;\ncreate table carbon_sink_data (\nDate int not null,\nSector int not null,\nLongitude float not null,\nLatitude float not null,\nValue float not null\n);",
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -106,7 +106,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CSVCarbonSinkData",
+						"referenceName": "CSVOceanCarbonSinkData",
 						"type": "DatasetReference"
 					}
 				],
