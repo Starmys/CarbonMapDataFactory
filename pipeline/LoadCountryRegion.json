@@ -1,9 +1,9 @@
 {
-	"name": "LoadCountryContinent",
+	"name": "LoadCountryRegion",
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyCountryContinentFromCSVToSQL",
+				"name": "Copy Country Region From CSV To SQL",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from country_region",
+						"preCopyScript": "delete from country_region;",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,

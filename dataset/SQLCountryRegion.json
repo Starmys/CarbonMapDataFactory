@@ -12,11 +12,11 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "CountryCode",
+				"name": "Code",
 				"type": "varchar"
 			},
 			{
-				"name": "CountryName",
+				"name": "Name",
 				"type": "varchar"
 			},
 			{
@@ -30,6 +30,16 @@
 			{
 				"name": "DataSource",
 				"type": "varchar"
+			},
+			{
+				"name": "Longitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Latitude",
+				"type": "float",
+				"precision": 15
 			}
 		],
 		"typeProperties": {
