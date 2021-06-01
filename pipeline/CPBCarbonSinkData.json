@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy to SQL Ocean Carbon Sink Data",
+				"name": "Copy to SQL Carbon Sink Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
