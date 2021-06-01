@@ -1,5 +1,5 @@
 {
-	"name": "CSVCarbonSinkData",
+	"name": "CSVOceanCarbonSinkData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
