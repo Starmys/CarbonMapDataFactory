@@ -70,24 +70,6 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
-					},
-					{
-						"activity": "Backup SQL Covid Data",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Backup SQL Carbon Data US",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Backup SQL Carbon Data World",
-						"dependencyConditions": [
-							"Succeeded"
-						]
 					}
 				],
 				"policy": {
@@ -115,114 +97,6 @@
 					"referenceName": "AzureBatch1",
 					"type": "LinkedServiceReference"
 				}
-			},
-			{
-				"name": "Backup SQL Carbon Data World",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"name": "Country",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "Country",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Sector",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "Sector",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Value",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "Value",
-									"type": "Double",
-									"physicalType": "Double"
-								}
-							},
-							{
-								"source": {
-									"name": "RateOfChange",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "RateOfChange",
-									"type": "Double",
-									"physicalType": "Double"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SQLCarbonDataWorld",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "SQLCarbonDataWorldBackup",
-						"type": "DatasetReference"
-					}
-				]
 			},
 			{
 				"name": "Copy to SQL Carbon Data World",
@@ -257,7 +131,14 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from carbon_data_world",
+						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
+						"storedProcedureParameters": {
+							"Table": {
+								"type": "String",
+								"value": "carbon_data_world"
+							}
+						},
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -346,222 +227,6 @@
 				]
 			},
 			{
-				"name": "Backup SQL Carbon Data US",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"name": "State",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "State",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Sector",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "Sector",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Value",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "Value",
-									"type": "Double",
-									"physicalType": "Double"
-								}
-							},
-							{
-								"source": {
-									"name": "RateOfChange",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "RateOfChange",
-									"type": "Double",
-									"physicalType": "Double"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SQLCarbonDataUS",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "SQLCarbonDataUSBackup",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "Backup SQL Covid Data",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "datetime"
-								},
-								"sink": {
-									"name": "Date",
-									"type": "DateTime",
-									"physicalType": "DateTime"
-								}
-							},
-							{
-								"source": {
-									"name": "Country",
-									"type": "String",
-									"physicalType": "varchar"
-								},
-								"sink": {
-									"name": "Country",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Confirmed",
-									"type": "Int64",
-									"physicalType": "bigint"
-								},
-								"sink": {
-									"name": "Confirmed",
-									"type": "Int64",
-									"physicalType": "Int64"
-								}
-							},
-							{
-								"source": {
-									"name": "Deaths",
-									"type": "Int64",
-									"physicalType": "bigint"
-								},
-								"sink": {
-									"name": "Deaths",
-									"type": "Int64",
-									"physicalType": "Int64"
-								}
-							},
-							{
-								"source": {
-									"name": "Stringency",
-									"type": "Double",
-									"physicalType": "float"
-								},
-								"sink": {
-									"name": "Stringency",
-									"type": "Double",
-									"physicalType": "Double"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SQLCovidData",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "SQLCovidDataBackup",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
 				"name": "Copy to SQL Covid Data",
 				"type": "Copy",
 				"dependsOn": [
@@ -594,7 +259,15 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from covid_data",
+						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
+						"sqlWriterTableType": "",
+						"storedProcedureParameters": {
+							"Table": {
+								"type": "String",
+								"value": "covid_data"
+							}
+						},
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -715,7 +388,14 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from carbon_data_us",
+						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
+						"storedProcedureParameters": {
+							"Table": {
+								"type": "String",
+								"value": "carbon_data_us"
+							}
+						},
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
