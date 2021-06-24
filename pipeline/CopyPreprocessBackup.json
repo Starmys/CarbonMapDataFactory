@@ -478,7 +478,7 @@
 				"type": "string",
 				"defaultValue": "https://carbontestcz.blob.core.windows.net/carbondatacsv?sp=racwdl&st=2021-04-23T02:48:58Z&se=2021-06-14T10:48:58Z&spr=https&sv=2020-02-10&sr=c&sig=NW6gBK3Ao6cN4SBubPrG%2BQgWpSm7j3nBtOGCAx1Mp4g%3D"
 			},
-			"type": {
+			"datatype": {
 				"type": "string",
 				"defaultValue": "uvw"
 			},
