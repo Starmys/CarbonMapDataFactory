@@ -82,7 +82,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"command": {
-						"value": "@/bin/bash -c \"/bin/bash environment.sh &&\n/bin/bash process.sh -s 'https://carbontestcz.blob.core.windows.net/carbonpreprocesssrc/*?sv=2020-04-08&st=2021-06-23T05%3A43%3A18Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=uWQrFP4pLF%2FKpLj7SP7jHp8TzuMI457EtPGshe2iGuc%3D' -i 'https://carbonmapinput.blob.core.windows.net/rawdata/CM_CO2_Emissions/*?sv=2020-04-08&st=2021-06-23T05%3A40%3A43Z&se=2021-07-31T05%3A40%3A00Z&sr=c&sp=rl&sig=AMPbUvCrJDWduDa9IF3qYdikAmD0ofu94w9TOO9lgsk%3D' -o 'https://carbontestcz.blob.core.windows.net/carbondatacsv?sv=2020-04-08&st=2021-06-23T05%3A43%3A53Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=OgsWxbDN%2FZMC%2FPUh%2BH%2FcTFiQUKd%2FoQMv%2BTHsc3ckbAs%3D' -t uvw\"",
+						"value": "@/bin/bash -c \"pipeline().parameters.env -s pipeline().parameters.src -i pipeline().parameters.input -o pipeline().parameters.output -t pipeline().parameters.datatype\"",
 						"type": "Expression"
 					},
 					"extendedProperties": {
@@ -131,6 +131,8 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "SET @Table = 'carbon_data_world'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -251,6 +253,8 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "SET @Table = 'covid_data'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -371,6 +375,8 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "SET @Table = 'carbon_data_us'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -459,6 +465,28 @@
 				]
 			}
 		],
+		"parameters": {
+			"src": {
+				"type": "string",
+				"defaultValue": "'https://carbontestcz.blob.core.windows.net/carbonpreprocesssrc/*?sv=2020-04-08&st=2021-06-23T05%3A43%3A18Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=uWQrFP4pLF%2FKpLj7SP7jHp8TzuMI457EtPGshe2iGuc%3D'"
+			},
+			"input": {
+				"type": "string",
+				"defaultValue": "'https://carbonmapinput.blob.core.windows.net/rawdata/CM_CO2_Emissions/*?sv=2020-04-08&st=2021-06-23T05%3A40%3A43Z&se=2021-07-31T05%3A40%3A00Z&sr=c&sp=rl&sig=AMPbUvCrJDWduDa9IF3qYdikAmD0ofu94w9TOO9lgsk%3D'"
+			},
+			"output": {
+				"type": "string",
+				"defaultValue": "'https://carbontestcz.blob.core.windows.net/carbondatacsv?sv=2020-04-08&st=2021-06-23T05%3A43%3A53Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=OgsWxbDN%2FZMC%2FPUh%2BH%2FcTFiQUKd%2FoQMv%2BTHsc3ckbAs%3D'"
+			},
+			"datatype": {
+				"type": "string",
+				"defaultValue": "uvw"
+			},
+			"env": {
+				"type": "string",
+				"defaultValue": "/bin/bash environment.sh  && /bin/bash process.sh"
+			}
+		},
 		"annotations": []
 	}
 }
