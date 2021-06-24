@@ -27,10 +27,6 @@
 				"type": "String"
 			},
 			{
-				"name": "Country",
-				"type": "String"
-			},
-			{
 				"name": "Date",
 				"type": "String"
 			},
@@ -40,6 +36,10 @@
 			},
 			{
 				"name": "Stringency",
+				"type": "String"
+			},
+			{
+				"name": "CountryRegion",
 				"type": "String"
 			}
 		]

@@ -23,7 +23,7 @@
 		},
 		"schema": [
 			{
-				"name": "Country",
+				"name": "CountryRegion",
 				"type": "String"
 			},
 			{
