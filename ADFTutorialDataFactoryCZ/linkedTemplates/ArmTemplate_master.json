@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
 		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
@@ -22,10 +26,6 @@
 		"CarbonMapInpusBlobStorage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CarbonMapInpusBlobStorage'"
-		},
-		"AzureBlobStorage2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
 		},
 		"AzureBatch1_properties_typeProperties_accountName": {
 			"type": "string",
@@ -69,26 +69,14 @@
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
 					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
 					"CarbonMapInpusBlobStorage_connectionString": {
 						"value": "[parameters('CarbonMapInpusBlobStorage_connectionString')]"
-					},
-					"AzureBlobStorage2_connectionString": {
-						"value": "[parameters('AzureBlobStorage2_connectionString')]"
-					},
-					"AzureBatch1_accessKey": {
-						"value": "[parameters('AzureBatch1_accessKey')]"
-					},
-					"AzureBatch1_properties_typeProperties_accountName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
-					},
-					"AzureBatch1_properties_typeProperties_batchUri": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
-					},
-					"AzureBatch1_properties_typeProperties_poolName": {
-						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
 					}
 				}
 			},
@@ -107,6 +95,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBatch1_accessKey": {
+						"value": "[parameters('AzureBatch1_accessKey')]"
+					},
+					"AzureBatch1_properties_typeProperties_accountName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_accountName')]"
+					},
+					"AzureBatch1_properties_typeProperties_batchUri": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]"
+					},
+					"AzureBatch1_properties_typeProperties_poolName": {
+						"value": "[parameters('AzureBatch1_properties_typeProperties_poolName')]"
 					}
 				}
 			},

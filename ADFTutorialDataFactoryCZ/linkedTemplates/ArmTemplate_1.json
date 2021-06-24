@@ -6,6 +6,22 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "ADFTutorialDataFactoryCZ"
+		},
+		"AzureBatch1_accessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessKey' of 'AzureBatch1'"
+		},
+		"AzureBatch1_properties_typeProperties_accountName": {
+			"type": "string",
+			"defaultValue": "carbondevtest"
+		},
+		"AzureBatch1_properties_typeProperties_batchUri": {
+			"type": "string",
+			"defaultValue": " https://carbondevtest.eastus.batch.azure.com"
+		},
+		"AzureBatch1_properties_typeProperties_poolName": {
+			"type": "string",
+			"defaultValue": "d1v2"
 		}
 	},
 	"variables": {
@@ -13,7 +29,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/SQLPreprocessedDataBackup')]",
+			"name": "[concat(parameters('factoryName'), '/SQLHistoricalData')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -22,488 +38,415 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "CarbonMapPreprocess"
+					"name": "CarbonMapStatic"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": {
-						"value": "@concat('preprocessed_data_backup_', formatDateTime(utcnow(), 'yyyy_MM_dd_hh_mm_ss'))",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSVPreprocessedData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapPreprocess"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "PreprocessedData.csv",
-						"container": "carbondatacsvv1"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
 				"schema": [
 					{
-						"name": "Date",
-						"type": "String"
+						"name": "Year",
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "Country",
-						"type": "String"
-					},
-					{
-						"name": "Sector",
-						"type": "String"
-					},
-					{
-						"name": "Value",
-						"type": "String"
-					},
-					{
-						"name": "Rate",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ALLCSV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CarbonMapInpusBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapInputs"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
-						"container": "rawdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ALLCSVBackup')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapBackup"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')",
-							"type": "Expression"
-						},
-						"container": "carbonbackup"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSVBaseline')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapStatic"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Baseline.csv",
-						"container": "carbondatastaticv1"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CSVCountryContinent')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage2",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapStatic"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "CountryContinent.csv",
-						"container": "carbondatastaticv1"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "country",
-						"type": "String"
-					},
-					{
-						"name": "code_2",
-						"type": "String"
-					},
-					{
-						"name": "code_3",
-						"type": "String"
-					},
-					{
-						"name": "country_code",
-						"type": "String"
-					},
-					{
-						"name": "iso_3166_2",
-						"type": "String"
-					},
-					{
-						"name": "continent",
-						"type": "String"
-					},
-					{
-						"name": "sub_region",
-						"type": "String"
-					},
-					{
-						"name": "region_code",
-						"type": "String"
-					},
-					{
-						"name": "sub_region_code",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SQLCountryContinent')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "CarbonMapStatic"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CountryCode",
 						"type": "varchar"
 					},
 					{
-						"name": "Continent",
-						"type": "varchar"
+						"name": "CO2",
+						"type": "float",
+						"precision": 15
 					},
 					{
-						"name": "SubRegion",
-						"type": "varchar"
+						"name": "Population",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GDP",
+						"type": "float",
+						"precision": 15
 					}
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "country_continent"
+					"table": "historical_data"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SummaryByCountry')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/SQLLandCarbonSinkData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "MappingDataFlow",
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonSinkSQL"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Sector",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CountryRegion",
+						"type": "varchar"
+					},
+					{
+						"name": "Value",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "RateOfChange",
+						"type": "float",
+						"precision": 15
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Aviation",
-								"type": "DatasetReference"
-							},
-							"name": "Aviation"
-						},
-						{
-							"dataset": {
-								"referenceName": "GroundTransport",
-								"type": "DatasetReference"
-							},
-							"name": "GroundTransport"
-						},
-						{
-							"dataset": {
-								"referenceName": "Industry",
-								"type": "DatasetReference"
-							},
-							"name": "Industry"
-						},
-						{
-							"dataset": {
-								"referenceName": "Power",
-								"type": "DatasetReference"
-							},
-							"name": "Power"
-						},
-						{
-							"dataset": {
-								"referenceName": "Residential",
-								"type": "DatasetReference"
-							},
-							"name": "Resindential"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "SQLSummaryByCountry",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Unpivot1"
-						},
-						{
-							"name": "Unpivot2"
-						},
-						{
-							"name": "Unpivot3"
-						},
-						{
-							"name": "Unpivot4"
-						},
-						{
-							"name": "Unpivot5"
-						},
-						{
-							"name": "Union1"
-						},
-						{
-							"name": "Pivot1"
-						}
-					],
-					"script": "source(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Resindential\nAviation unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot1\nGroundTransport unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot2\nIndustry unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot3\nPower unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot4\nResindential unpivot(output(\n\t\tCountry as string,\n\t\tValue as double\n\t),\n\tungroupBy({_c0}),\n\tlateral: true,\n\tignoreNullPivots: false) ~> Unpivot5\nUnpivot1, Unpivot2, Unpivot3, Unpivot4, Unpivot5 union(byName: true)~> Union1\nUnion1 pivot(groupBy({_c0}),\n\tpivotBy(Country, ['China', 'India', 'US', 'EU27&UK', 'Russia', 'Japan', 'Brazil']),\n\t{} = round(sum(Value), 2),\n\tcolumnNaming: '$N$V',\n\tlateral: true) ~> Pivot1\nPivot1 sink(input(\n\t\tDATE as timestamp,\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tDATE = {_c0},\n\t\tIndia,\n\t\tUS,\n\t\t{EU27&UK},\n\t\tRussia,\n\t\tJapan,\n\t\tBrazil\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+					"schema": "dbo",
+					"table": "land_carbon_sink_data"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SummaryBySector')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/SQLOceanCarbonSinkData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "MappingDataFlow",
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonSinkSQL"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Sector",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CountryRegion",
+						"type": "varchar"
+					},
+					{
+						"name": "Value",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "RateOfChange",
+						"type": "float",
+						"precision": 15
+					}
+				],
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Aviation",
-								"type": "DatasetReference"
-							},
-							"name": "Aviation"
-						},
-						{
-							"dataset": {
-								"referenceName": "GroundTransport",
-								"type": "DatasetReference"
-							},
-							"name": "GroundTransport"
-						},
-						{
-							"dataset": {
-								"referenceName": "Industry",
-								"type": "DatasetReference"
-							},
-							"name": "Industry"
-						},
-						{
-							"dataset": {
-								"referenceName": "Power",
-								"type": "DatasetReference"
-							},
-							"name": "Power"
-						},
-						{
-							"dataset": {
-								"referenceName": "Residential",
-								"type": "DatasetReference"
-							},
-							"name": "Residential"
-						},
-						{
-							"dataset": {
-								"referenceName": "InternationalShipping",
-								"type": "DatasetReference"
-							},
-							"name": "InternationalShipping"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "SQLSummaryBySector",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Sum1"
-						},
-						{
-							"name": "Sum2"
-						},
-						{
-							"name": "Sum3"
-						},
-						{
-							"name": "Sum4"
-						},
-						{
-							"name": "Sum5"
-						},
-						{
-							"name": "Select1"
-						},
-						{
-							"name": "Select2"
-						},
-						{
-							"name": "Select3"
-						},
-						{
-							"name": "Select4"
-						},
-						{
-							"name": "Select5"
-						},
-						{
-							"name": "Join1"
-						},
-						{
-							"name": "Join2"
-						},
-						{
-							"name": "Join3"
-						},
-						{
-							"name": "Join4"
-						},
-						{
-							"name": "Join5"
-						},
-						{
-							"name": "Select6"
-						},
-						{
-							"name": "Sum6"
-						}
-					],
-					"script": "source(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double,\n\t\tInternationalAviation as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Aviation\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> GroundTransport\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Industry\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Power\nsource(output(\n\t\t{_c0} as date 'dd/MM/yyyy',\n\t\tChina as double,\n\t\tIndia as double,\n\t\tUS as double,\n\t\t{EU27&UK} as double,\n\t\tRussia as double,\n\t\tJapan as double,\n\t\tBrazil as double,\n\t\tROW as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Residential\nsource(output(\n\t\tDate as date 'yyyy-MM-dd',\n\t\tWorld as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InternationalShipping\nAviation derive(Aviation = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW+InternationalAviation, 2)) ~> Sum1\nGroundTransport derive(GroundTransport = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW, 2)) ~> Sum2\nIndustry derive(Industry = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum3\nPower derive(Power = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum4\nResidential derive(Residential = round(China+India+US+{EU27&UK}+Russia+Japan+Brazil+ROW,2)) ~> Sum5\nSum1 select(mapColumn(\n\t\t{_c0},\n\t\tAviation\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSum2 select(mapColumn(\n\t\t{_c0},\n\t\tGroundTransport\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSum3 select(mapColumn(\n\t\t{_c0},\n\t\tIndustry\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSum4 select(mapColumn(\n\t\t{_c0},\n\t\tPower\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nSum5 select(mapColumn(\n\t\t{_c0},\n\t\tResidential\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nSelect1, Select2 join(Select1@{_c0} == Select2@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1, Select3 join(Select1@{_c0} == Select3@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join2\nJoin2, Select4 join(Select1@{_c0} == Select4@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join3\nJoin3, Select5 join(Select1@{_c0} == Select5@{_c0},\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join4\nJoin4, InternationalShipping join(Select1@{_c0} == Date,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join5\nJoin5 select(mapColumn(\n\t\tDate = Select1@{_c0},\n\t\tAviation,\n\t\tGroundTransport,\n\t\tIndustry,\n\t\tPower,\n\t\tResidential,\n\t\tInternationalShipping = World\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nSelect6 derive(Globe = Aviation+GroundTransport+Industry+Power+Residential+InternationalShipping) ~> Sum6\nSum6 sink(input(\n\t\tDATE as timestamp,\n\t\tPower as double,\n\t\t{Ground Transport} as double,\n\t\tIndustry as double,\n\t\tResidential as double,\n\t\tAviation as double,\n\t\t{International Shipping} as double,\n\t\tGlobe as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+					"schema": "dbo",
+					"table": "ocean_carbon_sink_data"
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLSummaryByCountry')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapView"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "China",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "India",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "US",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "EU27&UK",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Russia",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Japan",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Brazil",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "summary_by_countires"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQLSummaryBySector')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "CarbonMapView"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "DATE",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Power",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Ground Transport",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Industry",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Residential",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Aviation",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "International Shipping",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Globe",
+						"type": "float",
+						"precision": 15
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "summary_by_sector"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBatch1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBatch",
+				"typeProperties": {
+					"accountName": "[parameters('AzureBatch1_properties_typeProperties_accountName')]",
+					"accessKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureBatch1_accessKey')]"
+					},
+					"batchUri": "[parameters('AzureBatch1_properties_typeProperties_batchUri')]",
+					"poolName": "[parameters('AzureBatch1_properties_typeProperties_poolName')]",
+					"linkedServiceName": {
+						"referenceName": "AzureBlobStorage1",
+						"type": "LinkedServiceReference"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CPBCarbonSinkData')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy to SQL Carbon Sink Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*CarbonSinkData*.csv",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM carbon_sink_data;\nCREATE TABLE carbon_sink_data\n(\n\t[Date] int NOT NULL,\n\t[Sector] int NOT NULL,\n\t[Longitude] float NOT NULL,\n\t[Latitude] float NOT NULL,\n\t[Value] float NOT NULL\n);\n",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Longitude",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Latitude",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "Value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Value",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVCarbonSinkData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLCarbonSinkData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
 			},
 			"dependsOn": []
 		},
@@ -531,7 +474,6 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFolderPath": "CM_CO2_Emissions/CM_2020_Sectoral",
 									"wildcardFileName": "*.csv",
 									"enablePartitionDiscovery": false
 								},
@@ -547,7 +489,7 @@
 								"formatSettings": {
 									"type": "DelimitedTextWriteSettings",
 									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"fileExtension": ""
 								}
 							},
 							"enableStaging": false,
@@ -580,43 +522,6 @@
 						"type": "Custom",
 						"dependsOn": [
 							{
-								"activity": "Backup SQL Data",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"command": {
-								"value": "/bin/bash -c \"azcopy copy 'https://carbontestcz.blob.core.windows.net/carbondatastaticv1?sv=2020-04-08&st=2021-03-17T06%3A21%3A49Z&se=2021-03-18T06%3A21%3A49Z&sr=c&sp=racwdxlt&sig=XkyCX1GCfUZW%2FhADYAmxTbeyWXP%2FVmezjuCYNj1BZhI%3D' './' --recursive && azcopy copy 'https://carbonmapinput.blob.core.windows.net/rawdata/CM_CO2_Emissions/CM_2020_Sectoral?sv=2020-04-08&st=2021-03-17T06%3A28%3A18Z&se=2021-03-18T06%3A28%3A18Z&sr=c&sp=rl&sig=1uMkuv0BETLSC201Y%2FmVUFgk5rPYqXwhi27FVRehIcM%3D' './' --recursive && mv carbondatastaticv1 Raw && mv CM_2020_Sectoral/* Raw\nrm -r CM_2020_Sectoral && mv Raw/process_data_v1.py ./ && python3 process_data_v1.py && azcopy copy 'Output/PreprocessedData.csv' 'https://carbontestcz.blob.core.windows.net/carbondatacsvv1?sv=2020-04-08&st=2021-03-17T06%3A35%3A15Z&se=2021-03-18T06%3A35%3A15Z&sr=c&sp=rawl&sig=OkPqzL%2Bjm%2B97wKlC0XiVFpzYRgX6YPdo2fC0aMfGL18%3D'\"",
-								"type": "Expression"
-							},
-							"extendedProperties": {
-								"ct": "ffff"
-							},
-							"referenceObjects": {
-								"linkedServices": [],
-								"datasets": []
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "AzureBatch1",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Backup SQL Data",
-						"type": "Copy",
-						"dependsOn": [
-							{
 								"activity": "Backup CSV Data",
 								"dependencyConditions": [
 									"Succeeded"
@@ -632,105 +537,25 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+							"command": {
+								"value": "@/bin/bash -c \"/bin/bash environment.sh && /bin/bash process.sh -s 'https://carbontestcz.blob.core.windows.net/carbonpreprocesssrc/*?sv=2020-04-08&st=2021-06-23T05%3A43%3A18Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=uWQrFP4pLF%2FKpLj7SP7jHp8TzuMI457EtPGshe2iGuc%3D' -i 'https://carbonmapinput.blob.core.windows.net/rawdata/CM_CO2_Emissions/*?sv=2020-04-08&st=2021-06-23T05%3A40%3A43Z&se=2021-07-31T05%3A40%3A00Z&sr=c&sp=rl&sig=AMPbUvCrJDWduDa9IF3qYdikAmD0ofu94w9TOO9lgsk%3D' -o 'https://carbontestcz.blob.core.windows.net/carbondatacsv?sv=2020-04-08&st=2021-06-23T05%3A43%3A53Z&se=2021-07-31T05%3A43%3A00Z&sr=c&sp=racwdxlt&sig=OgsWxbDN%2FZMC%2FPUh%2BH%2FcTFiQUKd%2FoQMv%2BTHsc3ckbAs%3D' -t uvw\"",
+								"type": "Expression"
 							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
+							"extendedProperties": {
+								"test": "1"
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Date",
-											"type": "DateTime",
-											"physicalType": "datetime"
-										},
-										"sink": {
-											"name": "Date",
-											"type": "DateTime",
-											"physicalType": "datetime"
-										}
-									},
-									{
-										"source": {
-											"name": "Country",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Country",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Sector",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Sector",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Value",
-											"type": "Double",
-											"physicalType": "float"
-										},
-										"sink": {
-											"name": "Value",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "Percentage",
-											"type": "Double",
-											"physicalType": "float"
-										},
-										"sink": {
-											"name": "Percentage",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
+							"referenceObjects": {
+								"linkedServices": [],
+								"datasets": []
 							}
 						},
-						"inputs": [
-							{
-								"referenceName": "SQLPreprocessedData",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLPreprocessedDataBackup",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"linkedServiceName": {
+							"referenceName": "AzureBatch1",
+							"type": "LinkedServiceReference"
+						}
 					},
 					{
-						"name": "Copy Preprocessed Data to SQL",
+						"name": "Copy to SQL Carbon Data World",
 						"type": "Copy",
 						"dependsOn": [
 							{
@@ -762,7 +587,8 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "delete from preprocessed_data",
+								"preCopyScript": "SET @Table = 'carbon_data_world'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -783,12 +609,12 @@
 									},
 									{
 										"source": {
-											"name": "Country",
+											"name": "CountryRegion",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Country",
+											"name": "CountryRegion",
 											"type": "String",
 											"physicalType": "varchar"
 										}
@@ -819,12 +645,12 @@
 									},
 									{
 										"source": {
-											"name": "Rate",
+											"name": "RateOfChange",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Percentage",
+											"name": "RateOfChange",
 											"type": "Double",
 											"physicalType": "float"
 										}
@@ -839,14 +665,262 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "CSVPreprocessedData",
+								"referenceName": "CSVCarbonDataWorld",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "SQLPreprocessedData",
+								"referenceName": "SQLCarbonDataWorld",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy to SQL Covid Data",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Preprocess Data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "SET @Table = 'covid_data'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryRegion",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryRegion",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Confirmed",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Confirmed",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "Deaths",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Deaths",
+											"type": "Int64",
+											"physicalType": "bigint"
+										}
+									},
+									{
+										"source": {
+											"name": "Stringency",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Stringency",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVCovidData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLCovidData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy to SQL Carbon Data US",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Preprocess Data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "SET @Table = 'carbon_data_us'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Value",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "RateOfChange",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RateOfChange",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVCarbonDataUS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLCarbonDataUS",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -856,20 +930,297 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ALLCSV')]",
-				"[concat(variables('factoryId'), '/datasets/ALLCSVBackup')]",
-				"[concat(variables('factoryId'), '/datasets/SQLPreprocessedDataBackup')]",
-				"[concat(variables('factoryId'), '/datasets/CSVPreprocessedData')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBatch1')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LoadCountryContinent')]",
+			"name": "[concat(parameters('factoryName'), '/LoadCountryRegion')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "CopyCountryContinentFromCSVToSQL",
+						"name": "Copy Country Region From CSV To SQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from country_region;",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SubRegion",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SubRegion",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Continent",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Continent",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DataSource",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DataSource",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Longitude",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Latitude",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVCountryRegion",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLCountryRegion",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LoadHistoricalData')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyHistoricalDataFromCSVToSQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from historical_data",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Country",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CO2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CO2",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "Population",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Population",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "GDP",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "GDP",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVHistoricalData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLHistoricalData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLHistoricalData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Temp')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy to SQL Land Carbon Sink Data",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -894,7 +1245,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "delete from country_continent",
+								"preCopyScript": "delete from land_carbon_sink_data;",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -903,38 +1254,62 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "code_3",
+											"name": "Date",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "CountryCode",
+											"name": "Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryRegion",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryRegion",
 											"type": "String",
 											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "continent",
+											"name": "Value",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Continent",
-											"type": "String",
-											"physicalType": "varchar"
+											"name": "Value",
+											"type": "Double",
+											"physicalType": "float"
 										}
 									},
 									{
 										"source": {
-											"name": "sub_region",
+											"name": "RateOfChange",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "SubRegion",
-											"type": "String",
-											"physicalType": "varchar"
+											"name": "RateOfChange",
+											"type": "Double",
+											"physicalType": "float"
 										}
 									}
 								],
@@ -947,14 +1322,130 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "CSVCountryContinent",
+								"referenceName": "CSVLandCarbonSinkData",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "SQLCountryContinent",
+								"referenceName": "SQLLandCarbonSinkData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy to SQL Ocean Carbon Sink Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from ocean_carbon_sink_data;",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Sector",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Sector",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryRegion",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CountryRegion",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Value",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									},
+									{
+										"source": {
+											"name": "RateOfChange",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RateOfChange",
+											"type": "Double",
+											"physicalType": "float"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CSVOceanCarbonSinkData",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLOceanCarbonSinkData",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -964,91 +1455,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/CSVCountryContinent')]",
-				"[concat(variables('factoryId'), '/datasets/SQLCountryContinent')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SummaryV1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SummaryByCountry",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "SummaryByCountry",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Aviation": {},
-									"GroundTransport": {},
-									"Industry": {},
-									"Power": {},
-									"Resindential": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "SummaryBySector",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "SummaryBySector",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"Aviation": {},
-									"GroundTransport": {},
-									"Industry": {},
-									"Power": {},
-									"Residential": {},
-									"InternationalShipping": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/SummaryByCountry')]",
-				"[concat(variables('factoryId'), '/dataflows/SummaryBySector')]"
+				"[concat(variables('factoryId'), '/datasets/SQLLandCarbonSinkData')]",
+				"[concat(variables('factoryId'), '/datasets/SQLOceanCarbonSinkData')]"
 			]
 		}
 	]
