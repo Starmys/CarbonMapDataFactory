@@ -131,15 +131,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
-						"sqlWriterTableType": "carbon_data_world",
-						"storedProcedureTableTypeParameterName": "carbon_data_world",
-						"storedProcedureParameters": {
-							"Table": {
-								"type": "String",
-								"value": "carbon_data_world"
-							}
-						},
+						"preCopyScript": "SET @Table = 'carbon_data_world'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
@@ -261,15 +253,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
-						"sqlWriterTableType": "covid_data",
-						"storedProcedureTableTypeParameterName": "covid_data",
-						"storedProcedureParameters": {
-							"Table": {
-								"type": "String",
-								"value": "covid_data"
-							}
-						},
+						"preCopyScript": "SET @Table = 'covid_data'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
@@ -391,15 +375,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
-						"sqlWriterTableType": "carbon_data_us",
-						"storedProcedureTableTypeParameterName": "carbon_data_us",
-						"storedProcedureParameters": {
-							"Table": {
-								"type": "String",
-								"value": "carbon_data_us"
-							}
-						},
+						"preCopyScript": "SET @Table = 'carbon_data_us'\nDECLARE @Date NVARCHAR(16), @Query NVARCHAR(64)\nSELECT @Date = FORMAT(GETDATE(), 'yyyy_MM_dd')\nSET @Query = 'EXEC sp_rename ''' + @Table + ''',''' + @Table + '_backup_' + @Date + ''''\nEXEC (@Query)",
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
