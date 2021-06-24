@@ -132,6 +132,8 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
+						"sqlWriterTableType": "carbon_data_world",
+						"storedProcedureTableTypeParameterName": "carbon_data_world",
 						"storedProcedureParameters": {
 							"Table": {
 								"type": "String",
@@ -260,7 +262,8 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
-						"sqlWriterTableType": "",
+						"sqlWriterTableType": "covid_data",
+						"storedProcedureTableTypeParameterName": "covid_data",
 						"storedProcedureParameters": {
 							"Table": {
 								"type": "String",
@@ -389,6 +392,8 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"sqlWriterStoredProcedureName": "[dbo].[backup_table]",
+						"sqlWriterTableType": "carbon_data_us",
+						"storedProcedureTableTypeParameterName": "carbon_data_us",
 						"storedProcedureParameters": {
 							"Table": {
 								"type": "String",
