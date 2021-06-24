@@ -86,7 +86,7 @@
 						"type": "Expression"
 					},
 					"extendedProperties": {
-						"": ""
+						"test": "1"
 					},
 					"referenceObjects": {
 						"linkedServices": [],
@@ -151,12 +151,12 @@
 							},
 							{
 								"source": {
-									"name": "Country",
+									"name": "CountryRegion",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Country",
+									"name": "CountryRegion",
 									"type": "String",
 									"physicalType": "varchar"
 								}
@@ -271,12 +271,12 @@
 							},
 							{
 								"source": {
-									"name": "Country",
+									"name": "CountryRegion",
 									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Country",
+									"name": "CountryRegion",
 									"type": "String",
 									"physicalType": "varchar"
 								}
