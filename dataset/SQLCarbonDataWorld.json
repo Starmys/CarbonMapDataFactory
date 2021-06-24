@@ -12,18 +12,18 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "DATE",
+				"name": "Date",
 				"type": "datetime",
 				"precision": 23,
 				"scale": 3
 			},
 			{
-				"name": "Country",
-				"type": "text"
+				"name": "CountryRegion",
+				"type": "varchar"
 			},
 			{
 				"name": "Sector",
-				"type": "text"
+				"type": "varchar"
 			},
 			{
 				"name": "Value",
@@ -31,7 +31,7 @@
 				"precision": 15
 			},
 			{
-				"name": "Rate",
+				"name": "RateOfChange",
 				"type": "float",
 				"precision": 15
 			}
