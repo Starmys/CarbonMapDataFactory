@@ -86,7 +86,7 @@
 						"type": "Expression"
 					},
 					"extendedProperties": {
-						"ct": "ffff"
+						"": ""
 					},
 					"referenceObjects": {
 						"linkedServices": [],
